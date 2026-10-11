@@ -1,0 +1,85 @@
+name: flutter_task
+description: "Flutter task"
+
+publish_to: 'none'
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.0
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  get: ^4.6.6
+  dio: ^5.7.0
+  cached_network_image: ^3.4.1
+  shimmer: ^3.0.0
+  flutter_screenutil: ^5.9.3
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  connectivity_plus: ^6.0.5
+  path_provider: ^2.1.4
+  google_fonts: ^6.2.1
+  shared_preferences: ^2.3.2
+  init: ^1.0.0
+  image_cropper: ^12.2.1
+  image_picker: ^1.2.2
+  file_picker: ^11.0.2
+  pinput: ^5.0.1
+  flutter_svg: ^2.2.0
+  lottie: ^3.3.1
+  google_maps_flutter: ^2.14.2
+  google_maps_flutter_android: ^2.14.2
+  google_maps_flutter_platform_interface: ^2.14.0
+  geolocator: ^14.0.2
+  flutter_dotenv: ^6.0.1
+  flutter_advanced_switch: 3.2.0
+  flutter_polyline_points: ^3.1.0
+  intl_phone_number_input: ^0.7.5
+  socket_io_client: ^3.1.6
+  flutter_animarker: ^3.2.0
+  pdfrx: ^2.4.7
+  url_launcher: ^6.3.2
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+  build_runner:
+  flutter_gen_runner:
+  flutter_launcher_icons: ^0.14.4
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/lotties/
+    - .env
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter_Regular.ttf
+
+flutter_gen:
+  output: lib/core/utils/
+  line_length: 80 # Optional (default: 80)
+  integrations:
+    flutter_svg: true
+    lottie: true
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/images/app_icon.png"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/images/app_icon.png"

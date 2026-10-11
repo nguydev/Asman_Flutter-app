@@ -1,0 +1,245 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_task/core/utils/app_colors.dart';
+import 'package:flutter_task/core/utils/fonts.gen.dart';
+import 'package:flutter_task/widgets/widgets.dart';
+
+class CustomTextField extends StatefulWidget {
+  final TextEditingController? controller;
+  final TextInputType? keyboardType;
+  final bool? isObscureText;
+  final String? obscure;
+  final Color? filColor;
+  final Color? borderColor;
+  final Color? hintextColor;
+  final Widget? prefixIcon;
+  final String? labelText;
+  final String? hintText;
+  final double? contentPaddingHorizontal;
+  final double? contentPaddingVertical;
+  final double? hintextSize;
+  final Widget? suffixIcon;
+  final FormFieldValidator? validator;
+  final bool isPassword;
+  final bool? isEmail;
+  final bool? readOnly;
+  final double? borderRadio;
+  final VoidCallback? onTap;
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onFieldSubmitted;
+  final Color? cursorColor;
+  final Color? labelColor;
+  final int? maxLength;
+  final int? maxLines;
+  final bool? enabled;
+  final FocusNode? focusNode;
+  final bool autofocus;
+  final bool isDatePicker;
+  final String? fontFamily;
+  final TextInputAction? textInputAction;
+  final List<TextInputFormatter>? inputFormatter;
+  final int? minLines;
+  final InputBorder? border;
+
+  const CustomTextField(
+      {super.key,
+        this.contentPaddingHorizontal,
+        this.contentPaddingVertical,
+        this.hintText,
+        this.prefixIcon,
+        this.suffixIcon,
+        this.validator,
+        this.hintextColor,
+        this.borderColor,
+        this.isEmail = false,
+        this.controller,
+        this.keyboardType = TextInputType.text,
+        this.isObscureText = false,
+        this.obscure = '*',
+        this.filColor,
+        this.hintextSize,
+        this.labelText,
+        this.isPassword = false,
+        this.readOnly = false,
+        this.borderRadio,
+        this.onTap,
+        this.onChanged,
+        this.cursorColor,
+        this.maxLength,
+        this.enabled,
+        this.focusNode,
+        this.autofocus = false,
+        this.isDatePicker = false,
+        this.fontFamily,
+        this.textInputAction,
+        this.inputFormatter,
+        this.minLines, this.maxLines, this.border, this.labelColor, this.onFieldSubmitted});
+
+  @override
+  State<CustomTextField> createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  bool obscureText = true;
+  TextEditingController? _fallbackController;
+  late OutlineInputBorder _focusedBorder;
+  late OutlineInputBorder _enabledBorder;
+  late OutlineInputBorder _errorBorder;
+
+  TextEditingController get _controller =>
+      widget.controller ?? _fallbackController!;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.controller == null) {
+      _fallbackController = TextEditingController();
+    }
+    _buildBorders();
+  }
+
+  @override
+  void didUpdateWidget(CustomTextField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.borderRadio != widget.borderRadio ||
+        oldWidget.borderColor != widget.borderColor) {
+      _buildBorders();
+    }
+  }
+
+  void _buildBorders() {
+    final radius = BorderRadius.circular(widget.borderRadio?.r ?? 12.r);
+    _focusedBorder = OutlineInputBorder(
+      borderRadius: radius,
+      borderSide: BorderSide(
+          width: 1, color: widget.borderColor ?? Color(0xffDFE3E7)),
+    );
+    _enabledBorder = OutlineInputBorder(
+      borderRadius: radius,
+      borderSide: BorderSide(
+          width: 1, color: widget.borderColor ?? Color(0xffDFE3E7)),
+    );
+    _errorBorder = OutlineInputBorder(
+      borderRadius: radius,
+      borderSide:
+      BorderSide(color: widget.borderColor ?? Colors.red, width: 1),
+    );
+  }
+
+  @override
+  void dispose() {
+    _fallbackController?.dispose();
+    super.dispose();
+  }
+
+  void toggle() {
+    setState(() {
+      obscureText = !obscureText;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (widget.labelText != null)
+          CustomText(
+            text: widget.labelText!,
+            fontSize: 13.sp,
+            fontWeight: FontWeight.w500,
+            color: widget.labelColor ?? AppColors.textSecondary,
+            bottom: 4.h,
+          ),
+        SizedBox(
+          height: 4.h,
+        ),
+        TextFormField(
+          onFieldSubmitted: widget.onFieldSubmitted,
+          autofocus: widget.autofocus,
+          enabled: widget.enabled,
+          maxLength: widget.maxLength,
+          onChanged: widget.onChanged,
+          onTap: () {
+            if (widget.isDatePicker) {
+              // _selectDate(context);
+            } else {
+              widget.onTap?.call();
+            }
+          },
+          readOnly: widget.readOnly!,
+          controller: _controller,
+          keyboardType: widget.keyboardType,
+          inputFormatters: widget.inputFormatter,
+          textInputAction: widget.textInputAction,
+          obscuringCharacter: widget.obscure!,
+          autovalidateMode: AutovalidateMode.onUnfocus,
+          minLines: widget.isPassword ? 1 : (widget.minLines ?? 1),
+          maxLines: widget.isPassword ? 1 : (widget.maxLines ?? 8),
+
+
+            validator: widget.validator ??
+                  (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please enter ${widget.labelText?.toLowerCase() ?? widget.hintText ?? 'this field'}";
+                }
+                if (widget.isPassword && value.length < 8) {
+                  return "Password: 8 characters min!";
+                }
+                if (widget.isEmail == true && !value.contains('@')) {
+                  return "Please enter a valid email address";
+                }
+                return null;
+              },
+
+          cursorColor: widget.cursorColor ?? AppColors.textHint,
+          obscureText: widget.isPassword ? obscureText : false,
+          style: TextStyle(
+              color: widget.hintextColor ?? AppColors.textHint,
+              fontSize: widget.hintextSize ?? 14.h,
+              fontFamily: widget.fontFamily),
+          decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: widget.contentPaddingHorizontal ?? 0.w,
+                  vertical: widget.contentPaddingVertical ?? 0.h),
+              fillColor: widget.filColor ?? Color(0xffF0F4F8),
+              filled: true,
+              prefixIcon: widget.prefixIcon != null ? Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 10.w),
+                child: widget.prefixIcon,
+              ) : SizedBox(width: 8.w),
+              suffixIcon: widget.isPassword
+                  ? GestureDetector(
+                onTap: toggle,
+                child: _suffixIcon(obscureText
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined),
+              )
+                  : widget.suffixIcon,
+              prefixIconConstraints: BoxConstraints(minHeight: 24.w, minWidth: 24.w),
+              hintText: widget.hintText,
+              hintStyle: TextStyle(
+                  fontFamily: widget.fontFamily ?? FontFamily.inter,
+                  color: widget.hintextColor ?? AppColors.textHint,
+                  fontSize: widget.hintextSize ?? 14.h,
+                  fontWeight: FontWeight.w400),
+              focusedBorder: widget.border ?? _focusedBorder,
+              enabledBorder: widget.border ?? _enabledBorder,
+              errorBorder: widget.border ?? _errorBorder,
+              border: widget.border ??  _focusedBorder,
+              focusedErrorBorder: widget.border ?? _errorBorder,
+              errorStyle:
+              TextStyle(fontSize: 12.h, fontWeight: FontWeight.w400)),
+        ),
+        SizedBox(height: 10.h),
+      ],
+    );
+  }
+
+  Widget _suffixIcon(IconData icon) {
+    return Padding(
+        padding: const EdgeInsets.all(0),
+        child: Icon(icon, color: AppColors.textHint,size: 20.r));
+  }
+}

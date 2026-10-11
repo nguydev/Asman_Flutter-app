@@ -1,0 +1,149 @@
+# =========================
+# Environment & secrets
+# =========================
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.p12
+*.p8
+*.mobileprovision
+secrets/
+credentials/
+**/google-services.json
+**/GoogleService-Info.plist
+ios/Flutter/Env.xcconfig
+ios/Flutter/*.xcconfig
+!ios/Flutter/Debug.xcconfig
+!ios/Flutter/Release.xcconfig
+!ios/Flutter/Profile.xcconfig
+
+# =========================
+# Android signing
+# =========================
+**/key.properties
+**/*.keystore
+**/*.jks
+**/local.properties
+android/app/google-services.json
+
+# =========================
+# Flutter / Dart / Pub
+# =========================
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+.fvm/
+build/
+**/doc/api/
+**/ios/Flutter/.last_build_id
+
+# Generated / release artifacts
+*.apk
+*.aab
+*.ipa
+*.app
+*.dSYM.zip
+*.dSYM
+app.*.symbols
+app.*.map.json
+*.map.json
+
+# Coverage & test output
+coverage/
+.test_coverage/
+.test_results/
+*.lcov
+
+# =========================
+# Platform build caches
+# =========================
+# Android
+android/.gradle/
+android/captures/
+android/.cxx/
+android/app/debug/
+android/app/profile/
+android/app/release/
+android/local.properties
+**/GeneratedPluginRegistrant.java
+
+# iOS / macOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/Flutter/app.flx
+ios/Flutter/app.zip
+ios/Flutter/flutter_assets/
+ios/Flutter/flutter_export_environment.sh
+ios/ServiceDefinitions.json
+ios/Runner/GeneratedPluginRegistrant.*
+**/DerivedData/
+**/Pods/
+**/.symlinks/
+**/.generated/
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+*.mode1v3
+*.mode2v3
+*.moved-aside
+*.pbxuser
+*.perspectivev3
+!default.mode1v3
+!default.mode2v3
+!default.pbxuser
+!default.perspectivev3
+
+# =========================
+# IDE / editor
+# =========================
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.swp
+*.swo
+*~
+.atom/
+.buildlog/
+.history/
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# =========================
+# OS junk
+# =========================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# =========================
+# Logs & misc
+# =========================
+*.log
+*.class
+*.pyc
+*.tmp
+*.temp
+*.bak
+*.orig
+*.old
+dump.rdb
+.cache/
+tmp/
+temp/
